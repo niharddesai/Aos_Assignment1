@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+message SoldierMatrixRequest {
+  int32 field_size = 1;
+  int32 Num_soldier = 2;
+// Time interval between missile launches (in seconds).
+  int32 t = 3;
+// Total simulation time (in seconds).
+  int32 T = 4;
+}
+
+message SoldierMatrixResponse {
+  repeated string matrix_row = 1;
+  repeated Soldier soldiers = 2; 
+}
+
+message Soldier {
+    int32 id = 1;  // Add a unique ID field for each soldier
+    int32 x = 2;
+    int32 y = 3;
+    int32 speed = 4;
+    bool is_commander = 5;
+    bool alive = 6;
+}
+
+
+message MoveRequest {
+    int32 soldier_id = 1;
+    int32 target_x = 2;
+    int32 target_y = 3;
+}
+
+message MoveResponse {
+    // You can define a response message if needed.
+    // For simplicity, this example does not have a response message.
+}
+
+service SoldierMatrixService {
+    rpc GenerateMatrix(SoldierMatrixRequest) returns (SoldierMatrixResponse);
+    rpc Move(MoveRequest) returns (MoveResponse);
+}
